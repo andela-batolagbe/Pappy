@@ -16,15 +16,21 @@ Including another URLconf
 from django.conf.urls import url, handler500, handler404
 from django.contrib import admin
 from events import views
+from rest_framework import routers
+
+router = routers.SimpleRouter()
+router.register(r'register', views.UserView)
+router.register(r'user', views.UserView)
+
 
 urlpatterns = [
-		url(r'^$', views.index, name='index'),
-		url(r'^login/', views.login, name='login'),
-		url(r'^register/', views.register, name='register'),
-		url(r'^events/', views.events, name='eventslist'),
-		url(r'^user/', views.userpage, name='userdashboard'),
-    url(r'^admin/', admin.site.urls),
+	url(r'^$', views.index, name='index'),
+	url(r'^events/', views.events, name='eventslist'),
+  url(r'^admin/', admin.site.urls),
+  url(r'^login/', views.LoginView.as_view(), name='login'),
 ]
+
+urlpatterns += router.urls
 
 handler404 = views.error404
 
